@@ -36,21 +36,22 @@ async def on_ready():
     client.loop.create_task(change_status())
 
 
-@client.listen('on_message')
-async def clovis_response(message):
+@client.event
+async def on_message(message):
 
     if message.author == client.user:
         return
     
     if 'clovis' in message.content.lower():
         message_clovis = random.choice(quotes_clovis)
-        await message.channel.send(message_clovis)
+        await client.process_commands(message_clovis)
 
 
 @client.event
 async def on_guild_channel_create(new_channel: discord.TextChannel):
-    channel_to_send = client.get_channel(1072254406004838504)
-    await channel_to_send.send(f"Bien le bonjour bande de moutons ! Une nouvelle escouade viens d'être crée dans le channel {new_channel.mention}")
+    if new_channel.name.startswith("id-"):
+        channel_to_send = client.get_channel(1072254406004838504)
+        await channel_to_send.send(f"Bien le bonjour bande de moutons ! Une nouvelle escouade viens d'être crée dans le channel {new_channel.mention}")
 
 
 @client.tree.command()
