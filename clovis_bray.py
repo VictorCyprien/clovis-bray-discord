@@ -47,6 +47,10 @@ async def clovis_response(message):
         await message.channel.send(message_clovis)
 
 
+@client.event
+async def on_guild_channel_create(new_channel: discord.TextChannel):
+    channel_to_send = client.get_channel(1072254406004838504)
+    await channel_to_send.send(f"Bien le bonjour bande de moutons ! Une nouvelle escouade viens d'être crée dans le channel {new_channel.mention}")
 
 
 @client.tree.command()
