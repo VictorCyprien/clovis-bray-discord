@@ -36,8 +36,8 @@ async def on_ready():
     client.loop.create_task(change_status())
 
 
-@client.event
-async def on_message(message):
+@client.listen('on_message')
+async def clovis_response(message):
 
     if message.author == client.user:
         return
