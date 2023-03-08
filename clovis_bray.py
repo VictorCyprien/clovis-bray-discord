@@ -28,7 +28,7 @@ async def change_status():
         current_status = random.choice(status_clovis)
         activity = discord.Activity(type=current_status[0], name=current_status[1])
         await client.change_presence(status=discord.Status.online, activity=activity)
-        await asyncio.sleep(5)
+        await asyncio.sleep(15)
 
 @client.event
 async def on_ready():
