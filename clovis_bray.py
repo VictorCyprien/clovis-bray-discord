@@ -30,6 +30,7 @@ async def change_status():
         await client.change_presence(status=discord.Status.online, activity=activity)
         await asyncio.sleep(15)
 
+
 @client.event
 async def on_ready():
     print("Intelligence artificiel activée !")
@@ -37,18 +38,8 @@ async def on_ready():
 
 
 @client.event
-async def on_message(message):
-
-    if message.author == client.user:
-        return
-    
-    if 'clovis' in message.content.lower():
-        message_clovis = random.choice(quotes_clovis)
-        await client.process_commands(message_clovis)
-
-
-@client.event
 async def on_guild_channel_create(new_channel: discord.TextChannel):
+    new_channel.permissions_synced = True
     if new_channel.name.startswith("id-"):
         channel_to_send = client.get_channel(1072254406004838504)
         await channel_to_send.send(f"Bien le bonjour bande de moutons ! Une nouvelle escouade viens d'être crée dans le channel {new_channel.mention}")
