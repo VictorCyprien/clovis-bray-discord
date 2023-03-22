@@ -34,6 +34,11 @@ async def change_status():
 @client.event
 async def on_ready():
     print("Intelligence artificiel activée !")
+    try:
+        synced = await client.tree.sync()
+        print(f"Synced : {len(synced)} command(s) !")
+    except Exception as e:
+        print(e)
     client.loop.create_task(change_status())
 
 
