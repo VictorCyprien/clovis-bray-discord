@@ -46,7 +46,8 @@ async def on_ready():
 async def on_guild_channel_create(new_channel: discord.TextChannel):
     if new_channel.name.startswith("id-"):
         channel_to_send = client.get_channel(1072254406004838504)
-        await channel_to_send.send(f"@everyone Bien le bonjour bande de moutons ! Une nouvelle escouade viens d'être crée dans le channel {new_channel.mention}")
+        msg = build_msg(new_channel)
+        await channel_to_send.send(f"@everyone {msg}")
 
 
 @client.tree.command()
