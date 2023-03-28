@@ -6,7 +6,9 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 
-from helpers.sentence_clovis import quotes_clovis
+import aiobungie
+
+from helpers.functions_helpers import build_msg, get_characters_infos, build_embed
 from helpers.status_clovis import status_clovis
 
 intents = discord.Intents.default()
@@ -72,5 +74,21 @@ async def register(ctx: discord.Interaction):
     await ctx.response.send_message("Cliquez sur 'S'inscrire' pour vous associer à Charlemagne !", view=view)
 
 
+@client.tree.command()
+async def get_destiny_character(ctx: discord.Interaction, bungie_name: discord.Member):
+    """ Get your destiny characters inforamtions
+    """
+    print(bungie_name.display_name)
+
+    data = await get_characters_infos(client_bungie_api, bungie_name.display_name)
+    embed = build_embed(bungie_name, ctx.user.display_name, data)
+
+    await ctx.response.send_message(
+        f"Récupérations des informations de l'utilisateur {bungie_name.display_name}", 
+        embed=embed
+    )
+
+
 load_dotenv(dotenv_path="config")
+client_bungie_api = aiobungie.Client(os.getenv('BUNGIE_API_TOKEN'))
 client.run(os.getenv("TOKEN"))
